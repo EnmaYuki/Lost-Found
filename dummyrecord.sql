@@ -78,10 +78,10 @@ INSERT INTO `user` (`id`, `userid`, `role`, `password`) VALUES
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `assessment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `itemid` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uid` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `found` int(1) NOT NULL,
-  `location` varchar(30) NOT NULL,
+  `courseid` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aid` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `weighting` int(2) NOT NULL,
+  `total_score` int(3) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
