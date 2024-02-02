@@ -1,0 +1,9 @@
+/* "." is class, "#" is id*/
+.lily{
+    text-align: center;
+    color: blue;
+}
+h1{
+    font-size: 5rem;
+    text-transform: capitalize;
+}
