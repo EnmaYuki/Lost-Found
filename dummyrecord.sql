@@ -146,28 +146,26 @@ INSERT INTO `HK_districts` (`id`,`district_id` , `district_name`, `region_id`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course`
+-- Table structure for table `HK_region`
 --
-/*
 
-DROP TABLE IF EXISTS `course`;
-CREATE TABLE IF NOT EXISTS `course` (
-  `courseid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `credit` int(2) NOT NULL,
-  PRIMARY KEY (`courseid`),
-  UNIQUE KEY `course_id` (`courseid`)
+
+DROP TABLE IF EXISTS `HK_region`;
+CREATE TABLE IF NOT EXISTS `HK_region` (
+  `region_id` int(1) NOT NULL,
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`region_id`),
+  UNIQUE KEY `r_id` (`region_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `course`
+-- Dumping data for table `HK_region`
 --
-INSERT INTO `course` (`courseid`, `title`, `credit`) VALUES
-('BA202', 'Business Administration', 5),
-('CE103', 'Java Foundation', 3),
-('CE301', 'Computer Software', 6),
-('EG105', 'Engineering', 10);
-*/
+INSERT INTO `HK_region` (`region_id`, `name`) VALUES
+(1, 'New Territories'),
+(2, 'Kowloon'),
+(3, 'Hong Kong Island'),
+
 
 -- --------------------------------------------------------
 
