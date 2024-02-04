@@ -1,0 +1,21 @@
+body{
+    background-color:powderblue;
+}
+
+header{
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    text-align:center;
+    line-height:40px;
+    background-color:rgb(215, 143, 251);
+    user-select:none;
+}
+
+center{
+    text-align:center;
+}
+
+sidebar{
+    position: fixed;
+    right: 0;
+}
