@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mobile` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nickname` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `VIP` char(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `VIP` int(1) NOT NULL,
 
   PRIMARY KEY (`id`),
   UNIQUE KEY `userid` (`userid`)
@@ -76,33 +76,33 @@ INSERT INTO `user` (`id`, `userid`, `role`, `password`) VALUES
 */
 
 DROP TABLE IF EXISTS `item`;
-CREATE TABLE IF NOT EXISTS `assessment` (
+CREATE TABLE IF NOT EXISTS `item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `courseid` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `aid` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `weighting` int(2) NOT NULL,
-  `total_score` int(3) NOT NULL,
+  `itemid` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uid` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `found` int(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `assessment`
+-- Dumping data for table `item`
 --
 /*
-INSERT INTO `assessment` (`id`, `courseid`, `aid`, `weighting`, `total_score`) VALUES
-(1, 'BA202', 'a1', 10, 25),
-(2, 'BA202', 'a2', 15, 50),
-(3, 'BA202', 'exam', 75, 100),
-(4, 'CE103', 'exam', 50, 100),
-(5, 'CE301', 'a1', 20, 100),
-(6, 'EG105', 'a1', 35, 100),
-(7, 'CE103', 'a1', 25, 50),
-(8, 'CE301', 'a2', 20, 100),
-(9, 'EG105', 'a2', 35, 100),
-(10, 'CE103', 'a2', 25, 50),
-(11, 'CE301', 'exam', 60, 100),
-(12, 'EG105', 'exam', 30, 100);
-*/
+INSERT INTO `item` (`id`, `itemid`, `uid`, `location`, `found`) VALUES
+(1, 'TP202', '54389231', 'tp', 0),
+(2, 'YL202', '12239222', 'yl', 0),
+(3, 'NC202', '12223444', 'nc', 0),
+(4, 'TM103', '12223333', 'tm', 0),
+(5, 'MK354', '13332333', 'mk', 0),
+(6, 'TST32', '12322443', 'tst', 0),
+(7, 'TW342', '12323442', 'tw', 0),
+(8, 'TP342', '12663474', 'tp', 1),
+(9, 'TST45', '12454355', 'tst', 1),
+(10, 'ST453', '12546533', 'st', 1),
+(11, 'TM453', '17653774', 'tm', 0),
+(12, 'YL002', '13554464', 'yl', 0);
+
 -- --------------------------------------------------------
 
 --
