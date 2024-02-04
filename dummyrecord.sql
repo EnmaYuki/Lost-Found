@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `itemid` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `uid` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `location` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district_id` varchar(2) COLLATE utf8mb4_unicode_ci  NOT NULL,
   `found` int(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -88,55 +88,60 @@ CREATE TABLE IF NOT EXISTS `item` (
 --
 -- Dumping data for table `item`
 --
-/*
-INSERT INTO `item` (`id`, `itemid`, `uid`, `location`, `found`) VALUES
-(1, 'TP202', '54389231', 'tp', 0),
-(2, 'YL202', '12239222', 'yl', 0),
-(3, 'NC202', '12223444', 'nc', 0),
-(4, 'TM103', '12223333', 'tm', 0),
-(5, 'MK354', '13332333', 'mk', 0),
-(6, 'TST32', '12322443', 'tst', 0),
-(7, 'TW342', '12323442', 'tw', 0),
-(8, 'TP342', '12663474', 'tp', 1),
-(9, 'TST45', '12454355', 'tst', 1),
-(10, 'ST453', '12546533', 'st', 1),
-(11, 'TM453', '17653774', 'tm', 0),
-(12, 'YL002', '13554464', 'yl', 0);
+
+INSERT INTO `item` (`id`, `itemid`, `uid`, `district_id`, `found`) VALUES
+(1, 'TP202', '54389231', '06', 0),
+(2, 'YL202', '12239222', '09', 0),
+(3, 'NC202', '12223444', '11', 0),
+(4, 'TM103', '12223333', '08', 0),
+(5, 'MK354', '13332333', '14', 0),
+(6, 'TST32', '12322443', '13', 0),
+(7, 'TW342', '12323442', '15', 0),
+(8, 'TP342', '12663474', '17', 1),
+(9, 'TST45', '12454355', '01', 1),
+(10, 'ST453', '12546533', '02', 1),
+(11, 'TM453', '17653774', '05', 0),
+(12, 'YL002', '13554464', '18', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `assessment_record`
+-- Table structure for table `HK_districts`
 --
 
-DROP TABLE IF EXISTS `assessment_record`;
-CREATE TABLE IF NOT EXISTS `assessment_record` (
+DROP TABLE IF EXISTS `HK_districts`;
+CREATE TABLE IF NOT EXISTS `HK_districts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `item_id` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `aid` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
+  `district_id` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `region_id` int(1) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `assessment_record`
+-- Dumping data for table `HK_districts`
 --
-/*
-INSERT INTO `assessment_record` (`id`, `student_id`, `course_id`, `aid`, `score`) VALUES
-(1, '11223654', 'BA202', 'a1', 21),
-(2, '11223654', 'BA202', 'a2', 25),
-(3, '11223654', 'BA202', 'exam', 60),
-(4, '12353265', 'CE301', 'a1', 23.5),
-(5, '12353265', 'CE301', 'a2', 23.5),
-(6, '12353265', 'CE301', 'exam', 55),
-(7, '14223652', 'EG105', 'a1', 40),
-(8, '14223652', 'EG105', 'a2', 30),
-(9, '14223652', 'EG105', 'exam', 60),
-(10, '14223652', 'CE103', 'a1', 46),
-(11, '14223652', 'CE103', 'a2', 40),
-(12, '14223652', 'CE103', 'exam', 50);
-*/
+
+INSERT INTO `HK_districts` (`id`,`district_id` , `district_name`, `region_id`) VALUES
+(1,'01', 'Islands', 1),
+(2,'02', 'Kwai Tsing', 1),
+(3,'03', 'North', 1),
+(4,'04', 'Sai Kung', 1),
+(5,'05', 'Sha Tin', 1),
+(6,'06', 'Tai Po', 1),
+(7,'07', 'Tsuen Wan', 1),
+(8,'08', 'Tuen Mun', 1),
+(9,'09', 'Yuen Long', 1),
+(10,'10', 'Kowloon City', 2),
+(11,'11', 'Kwun Tong', 2);
+(12,'12', 'Sham Shui Po', 2),
+(13,'13', 'Wong Tai Sin', 2);
+(14,'14', 'Yau Tsim Mong', 2),
+(15,'15', 'Central and Western', 3);
+(16,'16', 'Eastern', 3),
+(17,'17', 'Southern', 3);
+(18,'18', 'Wan Chai', 3),
+
 
 -- --------------------------------------------------------
 
