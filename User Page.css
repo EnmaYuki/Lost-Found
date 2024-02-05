@@ -14,8 +14,3 @@ header{
 center{
     text-align:center;
 }
-
-sidebar{
-    position: fixed;
-    right: 0;
-}
