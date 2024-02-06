@@ -35,13 +35,22 @@ CREATE TABLE IF NOT EXISTS `user` (
   `uid` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `username` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password_md5` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
-  
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--add trigger before insert
+DELIMITER //
+CREATE TRIGGER set_password_md5 BEFORE INSERT ON `user`
+FOR EACH ROW
+BEGIN
+    SET NEW.password_md5 = MD5(NEW.password);
+END
+//DELIMITER ;
 
-INSERT INTO `user` (`uid`, `username`,`password`,`admin`) VALUES
-(00000001, 'ADMIN','administration',1);
+INSERT INTO `user` (`uid`, `username`, `password`, `admin`) VALUES
+(00000001, 'ADMIN', 'administration', 1);
+
 
 -- --------------------------------------------------------
 
@@ -60,7 +69,24 @@ CREATE TABLE IF NOT EXISTS `target_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DELIMITER //
+CREATE TRIGGER update_user
+AFTER INSERT ON `target_user`
+FOR EACH ROW
+BEGIN
+  INSERT INTO `user` (`uid`, `username`, `password`, `admin`)
+  VALUES (NEW.id+1, NEW.username, NEW.password, 0);
+END//
+DELIMITER ;
 
+INSERT INTO `target_user` (`id`, `username`, `password`, `email`, `mobile`, `nickname`, `VIP`) VALUES
+(00000001, 'user1', 'user001', 'user@mail.com', '32425834', 'user01', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item`
+--
 
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `item` (
