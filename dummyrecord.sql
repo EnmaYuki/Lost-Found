@@ -61,18 +61,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mobile` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nickname` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `VIP` int(1) NOT NULL,
+  `VIP` tinyint(1) NOT NULL DEFAULT '0'
   PRIMARY KEY (`id`),
   UNIQUE KEY `userid` (`userid`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `user`
 --
-
+/*
 INSERT INTO `user` (`id`, `userid`, `username`, `password`, `email`, `mobile`, `nickname`, `VIP`) VALUES
 (1, 'ADMIN', 'admin', 'administrator', 'admin@mail.com', '24761234', 'admin', 1);
-
+*/
 
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `item` (
