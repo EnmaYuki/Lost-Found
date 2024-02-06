@@ -27,200 +27,142 @@ USE `lost&found_db`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
---
-
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE IF NOT EXISTS `admin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `adminID` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ADMIN',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `adminID` (`adminID`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id`, `adminID`) VALUES
-(1, 'ADMIN');
-
--- --------------------------------------------------------
-
-
---
--- Table structure for table `user`
+-- Table structure for table `user` for store all users including admin
 --
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uid` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password_md5` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--add trigger before insert
+DELIMITER //
+CREATE TRIGGER set_password_md5 BEFORE INSERT ON `user`
+FOR EACH ROW
+BEGIN
+    SET NEW.password_md5 = MD5(NEW.password);
+END
+//DELIMITER ;
+
+INSERT INTO `user` (`uid`, `username`, `password`, `admin`) VALUES
+(00000001, 'ADMIN', 'administration', 1);
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `target_user` for user who is not admin
+--
+DROP TABLE IF EXISTS `target_user`;
+CREATE TABLE IF NOT EXISTS `target_user` (
+  `id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `username` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mobile` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nickname` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `VIP` char(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `VIP` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `userid` (`userid`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+DELIMITER //
+CREATE TRIGGER update_user
+AFTER INSERT ON `target_user`
+FOR EACH ROW
+BEGIN
+  INSERT INTO `user` (`uid`, `username`, `password`, `admin`)
+  VALUES (NEW.id+1, NEW.username, NEW.password, 0);
+END//
+DELIMITER ;
+
+INSERT INTO `target_user` (`id`, `username`, `password`, `email`, `mobile`, `nickname`, `VIP`) VALUES
+(00000001, 'user1', 'user001', 'user@mail.com', '32425834', 'user01', 0);
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `user`
+-- Table structure for table `item`
 --
-/*
-INSERT INTO `user` (`id`, `userid`, `role`, `password`) VALUES
-(1, 'ADMIN', 'a', 'administrator'),
-*/
 
 DROP TABLE IF EXISTS `item`;
-CREATE TABLE IF NOT EXISTS `assessment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `courseid` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `aid` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `weighting` int(2) NOT NULL,
-  `total_score` int(3) NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE IF NOT EXISTS `item` (
+  `item_id` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `uid` int(8) UNSIGNED ZEROFILL NOT NULL,
+  `description` varchar(99) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district_id` int(2) UNSIGNED ZEROFILL NOT NULL,
+  `found` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`item_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `assessment`
---
-/*
-INSERT INTO `assessment` (`id`, `courseid`, `aid`, `weighting`, `total_score`) VALUES
-(1, 'BA202', 'a1', 10, 25),
-(2, 'BA202', 'a2', 15, 50),
-(3, 'BA202', 'exam', 75, 100),
-(4, 'CE103', 'exam', 50, 100),
-(5, 'CE301', 'a1', 20, 100),
-(6, 'EG105', 'a1', 35, 100),
-(7, 'CE103', 'a1', 25, 50),
-(8, 'CE301', 'a2', 20, 100),
-(9, 'EG105', 'a2', 35, 100),
-(10, 'CE103', 'a2', 25, 50),
-(11, 'CE301', 'exam', 60, 100),
-(12, 'EG105', 'exam', 30, 100);
-*/
--- --------------------------------------------------------
-
---
--- Table structure for table `assessment_record`
---
-
-DROP TABLE IF EXISTS `assessment_record`;
-CREATE TABLE IF NOT EXISTS `assessment_record` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `item_id` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `aid` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `assessment_record`
---
-/*
-INSERT INTO `assessment_record` (`id`, `student_id`, `course_id`, `aid`, `score`) VALUES
-(1, '11223654', 'BA202', 'a1', 21),
-(2, '11223654', 'BA202', 'a2', 25),
-(3, '11223654', 'BA202', 'exam', 60),
-(4, '12353265', 'CE301', 'a1', 23.5),
-(5, '12353265', 'CE301', 'a2', 23.5),
-(6, '12353265', 'CE301', 'exam', 55),
-(7, '14223652', 'EG105', 'a1', 40),
-(8, '14223652', 'EG105', 'a2', 30),
-(9, '14223652', 'EG105', 'exam', 60),
-(10, '14223652', 'CE103', 'a1', 46),
-(11, '14223652', 'CE103', 'a2', 40),
-(12, '14223652', 'CE103', 'exam', 50);
-*/
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course`
+-- Table structure for table `HK_districts`
 --
-/*
 
-DROP TABLE IF EXISTS `course`;
-CREATE TABLE IF NOT EXISTS `course` (
-  `courseid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `credit` int(2) NOT NULL,
-  PRIMARY KEY (`courseid`),
-  UNIQUE KEY `course_id` (`courseid`)
+DROP TABLE IF EXISTS `HK_districts`;
+CREATE TABLE IF NOT EXISTS `HK_districts` (
+ `district_id` int(2) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `district_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `region_id` int(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`district_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `HK_districts`
+--
+
+INSERT INTO `HK_districts` (`district_id` , `district_name`, `region_id`) VALUES
+(01, 'Islands', 1),
+(02, 'Kwai Tsing', 1),
+(03, 'North', 1),
+(04, 'Sai Kung', 1),
+(05, 'Sha Tin', 1),
+(06, 'Tai Po', 1),
+(07, 'Tsuen Wan', 1),
+(08, 'Tuen Mun', 1),
+(09, 'Yuen Long', 1),
+(10, 'Kowloon City', 2),
+(11, 'Kwun Tong', 2),
+(12, 'Sham Shui Po', 2),
+(13, 'Wong Tai Sin', 2),
+(14, 'Yau Tsim Mong', 2),
+(15, 'Central and Western', 3),
+(16, 'Eastern', 3),
+(17, 'Southern', 3),
+(18, 'Wan Chai', 3);
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `HK_region`
+--
+
+
+DROP TABLE IF EXISTS `HK_region`;
+CREATE TABLE IF NOT EXISTS `HK_region` (
+  `region_id` int(1) NOT NULL,
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`region_id`),
+  UNIQUE KEY `region_id` (`region_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `course`
+-- Dumping data for table `HK_region`
 --
-INSERT INTO `course` (`courseid`, `title`, `credit`) VALUES
-('BA202', 'Business Administration', 5),
-('CE103', 'Java Foundation', 3),
-('CE301', 'Computer Software', 6),
-('EG105', 'Engineering', 10);
-*/
+INSERT INTO `HK_region` (`region_id`, `name`) VALUES
+(1, 'New Territories'),
+(2, 'Kowloon'),
+(3, 'Hong Kong Island');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `student`
---
-
-/*
-DROP TABLE IF EXISTS `student`;
-CREATE TABLE IF NOT EXISTS `student` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `studentid` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sname` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `courseid` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `student`
---
-INSERT INTO `student` (`id`, `studentid`, `sname`, `courseid`) VALUES
-(1, '11223654', 'Apple', 'BA202'),
-(2, '12353265', 'Chan', 'CE301'),
-(8, '12354364', 'Tester', 'BA202'),
-(9, '12354964', 'Tes', 'CE103');
-*/
-
--- --------------------------------------------------------
-
---
--- Table structure for table `teacher`
---
-
-/*
-DROP TABLE IF EXISTS `teacher`;
-CREATE TABLE IF NOT EXISTS `teacher` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `teacherid` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mobile` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `courseid` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `teacher`
---
-INSERT INTO `teacher` (`id`, `teacherid`, `name`, `mobile`, `courseid`) VALUES
-(1, '38459313', 'Amy', '64562765', 'BA202'),
-(2, '38459341', 'Hash', '65437643', 'CE103'),
-(3, '38459341', 'Hash', '65437643', 'CE301'),
-(4, '38459888', 'Rick', '96543455', 'EG105'),
-(5, '56989346', 'Tim', '90785634', NULL);
-*/
 
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
