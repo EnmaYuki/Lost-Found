@@ -11,6 +11,7 @@
 <header><h1>Your Profile</h1></header>
 
 <div>
+    <form action="">
     <center>
     <label for="iconInput">
     <img id="userIcon" src="default icon.png">
@@ -19,8 +20,9 @@
     </label>
     <h3>Change User name: <input id="usernameInput"><button onclick="saveUserName()">Save</button></h3>
     <h3>Change Password: <input id="passwordInput"><button onclick="savePassword()">Save</button></h3>
-    <h3>Change Email: <input id="emailInput"><button onclick="saveEmail()">Save</button></h3>
+    <h3>Change Email: <input type="email" id="emailInput"><button>Save</button></h3>
     </center>
+    </form>
 </div>
 
 <script>
