@@ -1,0 +1,9 @@
+.navBar {
+	background-color: #302f2f;
+	font-family: 'Roboto Medium', sans-serif;
+}
+a {
+	text-transform: capitalize;
+	text-decoration: none;
+	color: #fff !important;
+}
