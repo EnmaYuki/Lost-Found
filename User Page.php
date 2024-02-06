@@ -18,9 +18,11 @@
     <br><button onclick="changeIcon()">Upload Icon</button></br>
     <input type="file" id="iconInput" accept="image/*" style="display: none" onchange="handleIconChange(event)">
     </label>
-    <h3>Change User name: <input id="usernameInput"><button onclick="saveUserName()">Save</button></h3>
+    <h3>User Name: 123</h3>
+    <h3>Mobile: 12345678</h3>
+    <h3>Change Nick name: <input id="NicknameInput"><button onclick="saveNickName()">Save</button></h3>
     <h3>Change Password: <input id="passwordInput"><button onclick="savePassword()">Save</button></h3>
-    <h3>Change Email: <input type="email" id="emailInput"><button>Save</button></h3>
+    <h3>Change Email: <input type="email" id="emailInput"><button onclick="saveEmail()">Save</button></h3>
     </center>
     </form>
 </div>
@@ -53,13 +55,13 @@ function handleIconChange(event){
 }
 
 
-function saveUserName(){
-    var userInput = document.getElementById("usernameInput").value.trim();
-    if(userInput === ""){
-        alert("Update Failed: User name cannot be empty");
+function saveNickName(){
+    var NickInput = document.getElementById("NicknameInput").value.trim();
+    if(NickInput === ""){
+        alert("Update Failed: Nick name cannot be empty");
     }
     else{
-        alert("Update Successfully: User name changed to " + userInput);
+        alert("Update Successfully: Nick name changed to " + NickInput);
     }
 }
 
@@ -81,7 +83,7 @@ function savePassword(){
 function saveEmail(){
     var emailInput = document.getElementById("emailInput").value.trim();
 
-    if (emailInput === ""){
+    /*if (emailInput === ""){
         alert("Invalid email! Email cannot be empty.");
     }
     else if (!emailInput.includes("@")){
@@ -89,7 +91,7 @@ function saveEmail(){
     }
     else {
         alert("Update Successfully!Email is valid!");
-    }
+    }*/console.log(emailInput);
 }
 </script>
     
