@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `mobile` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nickname` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `VIP` int(1) NOT NULL,
-
   PRIMARY KEY (`id`),
   UNIQUE KEY `userid` (`userid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -70,10 +69,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 -- Dumping data for table `user`
 --
-/*
-INSERT INTO `user` (`id`, `userid`, `role`, `password`) VALUES
-(1, 'ADMIN', 'a', 'administrator'),
-*/
+
+INSERT INTO `user` (`id`, `userid`, `username`, `password`, `email`, `mobile`, `nickname`, `VIP`) VALUES
+(1, 'ADMIN', 'admin', 'administrator', 'admin@mail.com', '24761234', 'admin', 1);
+
 
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `item` (
@@ -133,14 +132,14 @@ INSERT INTO `HK_districts` (`id`,`district_id` , `district_name`, `region_id`) V
 (8,'08', 'Tuen Mun', 1),
 (9,'09', 'Yuen Long', 1),
 (10,'10', 'Kowloon City', 2),
-(11,'11', 'Kwun Tong', 2);
+(11,'11', 'Kwun Tong', 2),
 (12,'12', 'Sham Shui Po', 2),
-(13,'13', 'Wong Tai Sin', 2);
+(13,'13', 'Wong Tai Sin', 2),
 (14,'14', 'Yau Tsim Mong', 2),
-(15,'15', 'Central and Western', 3);
+(15,'15', 'Central and Western', 3),
 (16,'16', 'Eastern', 3),
-(17,'17', 'Southern', 3);
-(18,'18', 'Wan Chai', 3),
+(17,'17', 'Southern', 3),
+(18,'18', 'Wan Chai', 3);
 
 
 -- --------------------------------------------------------
@@ -164,66 +163,11 @@ CREATE TABLE IF NOT EXISTS `HK_region` (
 INSERT INTO `HK_region` (`region_id`, `name`) VALUES
 (1, 'New Territories'),
 (2, 'Kowloon'),
-(3, 'Hong Kong Island'),
+(3, 'Hong Kong Island');
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `student`
---
-
-/*
-DROP TABLE IF EXISTS `student`;
-CREATE TABLE IF NOT EXISTS `student` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `studentid` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sname` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `courseid` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `student`
---
-INSERT INTO `student` (`id`, `studentid`, `sname`, `courseid`) VALUES
-(1, '11223654', 'Apple', 'BA202'),
-(2, '12353265', 'Chan', 'CE301'),
-(8, '12354364', 'Tester', 'BA202'),
-(9, '12354964', 'Tes', 'CE103');
-*/
-
--- --------------------------------------------------------
-
---
--- Table structure for table `teacher`
---
-
-/*
-DROP TABLE IF EXISTS `teacher`;
-CREATE TABLE IF NOT EXISTS `teacher` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `teacherid` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mobile` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `courseid` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `teacher`
---
-INSERT INTO `teacher` (`id`, `teacherid`, `name`, `mobile`, `courseid`) VALUES
-(1, '38459313', 'Amy', '64562765', 'BA202'),
-(2, '38459341', 'Hash', '65437643', 'CE103'),
-(3, '38459341', 'Hash', '65437643', 'CE301'),
-(4, '38459888', 'Rick', '96543455', 'EG105'),
-(5, '56989346', 'Tim', '90785634', NULL);
-*/
 
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
